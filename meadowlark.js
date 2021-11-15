@@ -1,5 +1,7 @@
 const express = require("express");
 const expressHandlebars = require("express-handlebars");
+const fortune = require("./lib/fortune");
+
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -11,15 +13,9 @@ app.set("view engine", "handlebars");
 
 app.get("/", (request, response) => response.render("home"));
 app.get("/about", (request, response) => {
-    const fortunes = [
-        "Conquer your fears or they will conquer you.",
-        "Rivers need springs.",
-        "Do not fear what you don't know.",
-        "You will have a pleasant suprise.",
-        "Whenever possible, keep it simple.",
-    ];
-    const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-    response.render("about", { fortune: randomFortune });
+    response.render("about", {
+        fortune: fortune.getFortune()
+    });
 });
 
 // custom 400 page
